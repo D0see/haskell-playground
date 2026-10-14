@@ -10,11 +10,22 @@ fizzbuzz n
     | otherwise = show n: fizzbuzz (n - 1)
 
 reverseList :: [a] -> [a] -> [a]
-reverseList y [x] = x: y
-reverseList y (x:xs) = reverseList (x:y) xs
+reverseList acc [] = acc
+reverseList acc [x] = x: acc
+reverseList acc (x:xs) = reverseList (x:acc) xs
 
-reverseList' = reverseList []
+sumList :: Int -> [Int] -> Int
+sumList acc [] = acc
+sumList acc (x:xs) = sumList (acc + x) xs 
+
+buildDecreasingList :: Int -> [Int]
+buildDecreasingList n
+    | n == 1 = [0]
+    | otherwise = n: buildDecreasingList(n - 1)
 
 main :: IO()
 main = do
-    print(reverseList' . fizzbuzz $ 15)
+    let reverseList' = reverseList []
+    let sumList' = sumList 0
+    -- print(reverseList' . fizzbuzz $ 15)
+    print(reverseList' . fizzbuzz . sumList' . buildDecreasingList $ 15  )
